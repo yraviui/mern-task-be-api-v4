@@ -1,6 +1,15 @@
 import TaskModel from "../models/tasks.js";
 import UserModel from "../models/users.js";
 
+export const getUsersController = async (req, res) => {
+   try {
+      const users = await UserModel.find({ role: 'user' }).select('-password');
+      res.status(200).send({ success: true, message: 'Users retrieved successfully', users });
+   } catch (error) {
+      res.status(500).send({ success: false, message: 'Server error', error: error.message });
+   }
+}
+
 export const getUserTasksController = async (req, res) => {
    try {
     const userId = req.user._id; // Assuming req.user is populated by the authentication middleware

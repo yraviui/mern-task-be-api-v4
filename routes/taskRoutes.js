@@ -2,8 +2,11 @@ import express from 'express';
 
 import { createTaskController, getTasksController, getTaskByIdController, updateTaskController, deleteTaskController } from '../controller/taskController.js';
 import { isAdmin, requireSignIn } from '../middlewares/authMiddlewares.js';
+import { getUsersController } from '../controller/userTasksController.js';
 
 const router = express.Router();
+
+router.get('/users', requireSignIn, isAdmin, getUsersController);
 
 router.post('/tasks', requireSignIn, isAdmin, createTaskController);
 router.get('/tasks', requireSignIn, getTasksController);
